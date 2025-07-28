@@ -5,6 +5,7 @@ RISK LEVEL HARMLESS
 
   PRIVATE SECTION.
     METHODS test1 FOR TESTING.
+    METHODS test2 FOR TESTING.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
@@ -27,6 +28,11 @@ CLASS ltcl_test IMPLEMENTATION.
 
     DATA logger TYPE REF TO zpcs02_logger.
     logger = NEW #( client = |100| ).
+    logger->log( |Hello World| ).
+  ENDMETHOD.
+
+  METHOD test2.
+    DATA(logger) = NEW zpcs02_logger( client = |100| ).
     logger->log( |Hello World| ).
   ENDMETHOD.
 
