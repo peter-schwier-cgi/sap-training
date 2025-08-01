@@ -12,7 +12,7 @@ CLASS ltcl_test IMPLEMENTATION.
 
   METHOD test1.
     TEST-INJECTION zpcs02_logger_unique_id.
-      unique_id = 'b046851b09a04ecf8c155fe1b8d5319d'.
+      unique_id = 'pQiiIhQMTB+kzAAAEdOgMw'.
     END-TEST-INJECTION.
     TEST-INJECTION zpcs02_logger_timestamp.
     END-TEST-INJECTION.
@@ -21,7 +21,7 @@ CLASS ltcl_test IMPLEMENTATION.
       DATA default_unique_id TYPE c LENGTH 36.
       cl_abap_unit_assert=>assert_equals( exp = '100' act = record-client ).
       cl_abap_unit_assert=>assert_equals( exp = default_timestamp act = record-timestamp ).
-      cl_abap_unit_assert=>assert_equals( exp = 'b046851b09a04ecf8c155fe1b8d5319d' act = record-unique_id ).
+      cl_abap_unit_assert=>assert_equals( exp = 'pQiiIhQMTB+kzAAAEdOgMw' act = record-unique_id ).
       cl_abap_unit_assert=>assert_equals( exp = default_unique_id act = record-re_unique_id ).
       cl_abap_unit_assert=>assert_equals( exp = |Hello World| act = record-note ).
     END-TEST-INJECTION.

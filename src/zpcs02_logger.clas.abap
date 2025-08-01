@@ -11,7 +11,7 @@ CLASS zpcs02_logger DEFINITION
         client       TYPE t_client
         re_unique_id TYPE zpcs02_reuniqueid OPTIONAL
         generator    TYPE REF TO if_system_uuid OPTIONAL
-        writer          TYPE REF TO if_oo_adt_classrun_out OPTIONAL
+        writer       TYPE REF TO if_oo_adt_classrun_out OPTIONAL
       .
 
     METHODS regarding
@@ -23,7 +23,6 @@ CLASS zpcs02_logger DEFINITION
       IMPORTING
                 note        TYPE zpcs02_note
       RETURNING VALUE(this) TYPE REF TO zpcs02_logger.
-    .
 
   PROTECTED SECTION.
     DATA client TYPE t_client.
@@ -50,7 +49,7 @@ CLASS zpcs02_logger IMPLEMENTATION.
   METHOD log.
     TEST-SEAM zpcs02_logger_unique_id.
       TRY.
-          DATA(unique_id) = me->generator->create_uuid_c32( ).
+          DATA(unique_id) = me->generator->create_uuid_c22( ).
         CATCH cx_uuid_error.
           "handle exception
           " Doing nothing here because I can't figure out a valid recovery action.
@@ -59,7 +58,6 @@ CLASS zpcs02_logger IMPLEMENTATION.
     TEST-SEAM zpcs02_logger_timestamp.
       DATA(timestamp) = utclong_current( ).
     END-TEST-SEAM.
-    DATA records TYPE TABLE OF zpcs02_log.
     DATA record TYPE zpcs02_log.
     record-client = me->client.
     record-timestamp = timestamp.
