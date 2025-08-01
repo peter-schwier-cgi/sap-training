@@ -14,11 +14,10 @@ ENDCLASS.
 
 CLASS zpcs02_main IMPLEMENTATION.
 
-
   METHOD if_oo_adt_classrun~main.
 
     TRY.
-        DATA(re_unique_id) = cl_uuid_factory=>create_system_uuid( )->create_uuid_c32(  ).
+        DATA(re_unique_id) = cl_uuid_factory=>create_system_uuid( )->create_uuid_x16(  ).
       CATCH cx_uuid_error INTO DATA(ex).
         "handle exception
         out->write( |{ ex->get_text(  ) }| ).
