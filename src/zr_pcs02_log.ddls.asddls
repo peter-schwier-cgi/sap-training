@@ -1,15 +1,23 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@Metadata.allowExtensions: true
-@EndUserText.label: '###GENERATED Core Data Service Entity'
-define writable root view entity ZR_PCS02_TODO
-  as select from zpcs02_todo as Todo
+@EndUserText.label: 'View Entity for ZPCS02_LOG'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+/* Writable means that this view cannot do other than select rows from
+ * a single table. No parameters, no calculated fields.
+ * https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENCDS_DEFINE_WRTBL_VIEW_V2.html
+ */
+define writable root view entity ZR_PCS02_LOG
+  as select from zpcs02_log
 {
+  key timestamp             as Timestamp,
   key unique_id             as UniqueId,
-      parent_unique_id      as ParentUniqueId,
-      title                 as Title,
+      re_unique_id          as ReUniqueId,
       note                  as Note,
-      start_date            as StartDate,
-      due_date              as DueDate,
       @Semantics.user.createdBy: true
       created_by            as CreatedBy,
       @Semantics.systemDateTime.createdAt: true
@@ -22,5 +30,4 @@ define writable root view entity ZR_PCS02_TODO
       last_changed_by       as LastChangedBy,
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt
-
 }

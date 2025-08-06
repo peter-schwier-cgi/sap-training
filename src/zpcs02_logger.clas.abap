@@ -5,6 +5,7 @@ CLASS zpcs02_logger DEFINITION
 
   PUBLIC SECTION.
     TYPES: t_client TYPE c LENGTH 3.
+    TYPES: tt_ZR_PCS02_LOG TYPE STANDARD TABLE OF zr_pcs02_log WITH EMPTY KEY.
 
     METHODS constructor
       IMPORTING
@@ -22,7 +23,14 @@ CLASS zpcs02_logger DEFINITION
     METHODS log
       IMPORTING
                 note        TYPE zpcs02_note
-      RETURNING VALUE(this) TYPE REF TO zpcs02_logger.
+      RETURNING VALUE(this) TYPE REF TO zpcs02_logger
+      RAISING
+        cx_uuid_error.
+
+    METHODS get_logs
+      IMPORTING
+                count         TYPE i DEFAULT 5
+      RETURNING VALUE(result) TYPE tt_ZR_PCS02_LOG.
 
   PROTECTED SECTION.
     DATA client TYPE t_client.
@@ -48,29 +56,24 @@ CLASS zpcs02_logger IMPLEMENTATION.
 
   METHOD log.
     TEST-SEAM zpcs02_logger_unique_id.
-      TRY.
-          DATA(unique_id) = me->generator->create_uuid_c22( ).
-        CATCH cx_uuid_error.
-          "handle exception
-          " Doing nothing here because I can't figure out a valid recovery action.
-      ENDTRY.
+      " DATA(unique_id) = me->generator->create_uuid_x16( ).
+      DATA(unique_id) = cl_system_uuid=>if_system_uuid_rfc4122_static~create_uuid_x16_by_version( version = 4 ).
     END-TEST-SEAM.
     TEST-SEAM zpcs02_logger_timestamp.
       DATA(timestamp) = utclong_current( ).
     END-TEST-SEAM.
-    DATA record TYPE zpcs02_log.
-    record-client = me->client.
+    DATA record TYPE zr_pcs02_log.
     record-timestamp = timestamp.
-    record-unique_id = unique_id.
-    record-re_unique_id = me->re_unique_id.
+    record-UniqueId = unique_id.
+    record-ReUniqueId = me->re_unique_id.
     record-note = note.
 
     TEST-SEAM zpcs02_logger_insert.
-      INSERT INTO zpcs02_log VALUES @record.
+      INSERT INTO zr_pcs02_log VALUES @record.
     END-TEST-SEAM.
 
     IF NOT me->writer IS INITIAL.
-      me->writer->write( |{ record-timestamp }: [{ record-re_unique_id }] { record-note }| ).
+      me->writer->write( |{ record-timestamp }: [{ record-ReUniqueId }] { record-note }| ).
     ENDIF.
 
     this = me.
@@ -78,6 +81,16 @@ CLASS zpcs02_logger IMPLEMENTATION.
 
   METHOD regarding.
     this = NEW zpcs02_logger( client = me->client re_unique_id = re_unique_id generator = me->generator ).
+  ENDMETHOD.
+
+  METHOD get_logs.
+    SELECT FROM zr_pcs02_log
+    FIELDS *
+    ORDER BY Timestamp DESCENDING
+    INTO TABLE @FINAL(sql_result)
+    UP TO @count ROWS
+    .
+    result = sql_result.
   ENDMETHOD.
 
 ENDCLASS.

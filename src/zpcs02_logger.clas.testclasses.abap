@@ -19,10 +19,9 @@ CLASS ltcl_test IMPLEMENTATION.
     TEST-INJECTION zpcs02_logger_insert.
       DATA default_timestamp TYPE utclong.
       DATA default_unique_id TYPE c LENGTH 36.
-      cl_abap_unit_assert=>assert_equals( exp = '100' act = record-client ).
       cl_abap_unit_assert=>assert_equals( exp = default_timestamp act = record-timestamp ).
-      cl_abap_unit_assert=>assert_equals( exp = 'pQiiIhQMTB+kzAAAEdOgMw' act = record-unique_id ).
-      cl_abap_unit_assert=>assert_equals( exp = default_unique_id act = record-re_unique_id ).
+      cl_abap_unit_assert=>assert_equals( exp = 'pQiiIhQMTB+kzAAAEdOgMw' act = record-UniqueId ).
+      cl_abap_unit_assert=>assert_equals( exp = default_unique_id act = record-ReUniqueId ).
       cl_abap_unit_assert=>assert_equals( exp = |Hello World| act = record-note ).
     END-TEST-INJECTION.
 
