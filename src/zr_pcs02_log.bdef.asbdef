@@ -8,17 +8,31 @@ persistent table zpcs02_log
 lock master
 authorization master ( instance )
 etag master LocalLastChangedAt
+early numbering
 {
-  field ( readonly ) Timestamp;
-  field ( readonly, numbering:managed ) UniqueId;
-  field ( readonly ) CreatedBy, CreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedBy, LastChangedAt;
+  field ( readonly ) Timestamp, UniqueId;
   field ( mandatory ) Note;
-
+  field ( readonly ) CreatedBy, CreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedBy, LastChangedAt;
 
   create ( authorization : global );
-  // update; // No need to update logs.
+  update;
   // delete; // No need for consumers to delete logs.
 
-  validation ValidateHasNote on save { field Note; }
+  // determination SetTimestamp on save { create; }
+  // validation ValidateHasNote on save { field Note; }
 
+
+  mapping for zpcs02_log corresponding
+    {
+      Timestamp          = timestamp;
+      UniqueId           = unique_id;
+      ReUniqueId         = re_unique_id;
+      Note               = note;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+    }
 }

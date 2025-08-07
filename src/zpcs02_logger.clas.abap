@@ -25,7 +25,7 @@ CLASS zpcs02_logger DEFINITION
                 note        TYPE zpcs02_note
       RETURNING VALUE(this) TYPE REF TO zpcs02_logger
       RAISING
-        cx_uuid_error.
+                cx_uuid_error.
 
     METHODS get_logs
       IMPORTING
@@ -55,25 +55,23 @@ CLASS zpcs02_logger IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD log.
-    TEST-SEAM zpcs02_logger_unique_id.
-      " DATA(unique_id) = me->generator->create_uuid_x16( ).
-      DATA(unique_id) = cl_system_uuid=>if_system_uuid_rfc4122_static~create_uuid_x16_by_version( version = 4 ).
-    END-TEST-SEAM.
-    TEST-SEAM zpcs02_logger_timestamp.
-      DATA(timestamp) = utclong_current( ).
-    END-TEST-SEAM.
-    DATA record TYPE zr_pcs02_log.
-    record-timestamp = timestamp.
-    record-UniqueId = unique_id.
-    record-ReUniqueId = me->re_unique_id.
-    record-note = note.
 
-    TEST-SEAM zpcs02_logger_insert.
-      INSERT INTO zr_pcs02_log VALUES @record.
+    TEST-SEAM zpcs02_logger_entity_create.
+
+      MODIFY ENTITY zr_pcs02_log
+      CREATE FIELDS ( ReUniqueId Note ) WITH VALUE #(
+        ( %cid = 'cid1' ReUniqueId = me->re_unique_id Note = note )
+       )
+      FAILED FINAL(failed)
+      REPORTED FINAL(reported)
+      MAPPED FINAL(records).
+
+      COMMIT ENTITIES.
+
     END-TEST-SEAM.
 
     IF NOT me->writer IS INITIAL.
-      me->writer->write( |{ record-timestamp }: [{ record-ReUniqueId }] { record-note }| ).
+      me->writer->write( |{ records-zr_pcs02_log[ 1 ]-Timestamp }: [{ me->re_unique_id }] { note }.| ).
     ENDIF.
 
     this = me.
@@ -84,6 +82,7 @@ CLASS zpcs02_logger IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_logs.
+    " TODO: Need to update this to use EML.
     SELECT FROM zr_pcs02_log
     FIELDS *
     ORDER BY Timestamp DESCENDING
