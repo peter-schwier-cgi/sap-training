@@ -3,9 +3,9 @@
 @EndUserText.label: 'View Entity for ZPCS02_LOG'
 @Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.usageType:{
-    serviceQuality: #X,
-    sizeCategory: #S,
-    dataClass: #MIXED
+    serviceQuality: #B,
+    sizeCategory: #L,
+    dataClass: #TRANSACTIONAL
 }
 /* Writable means that this view cannot do other than select rows from
  * a single table. No parameters, no calculated fields.

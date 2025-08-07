@@ -1,0 +1,24 @@
+/* https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENCDS_BDEF.html */
+/* Draft table name pattern from: https://learning.sap.com/learning-journeys/acquire-core-abap-skills/exploring-the-architecture-of-rap_cdfbb8b8-9d94-4c33-bc5d-3d29d8206724 */
+managed implementation in class zbp_r_pcs02_log unique;
+strict ( 2 );
+
+define behavior for ZR_PCS02_LOG //alias <alias_name>
+persistent table zpcs02_log
+lock master
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  field ( readonly ) Timestamp;
+  field ( readonly, numbering:managed ) UniqueId;
+  field ( readonly ) CreatedBy, CreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedBy, LastChangedAt;
+  field ( mandatory ) Note;
+
+
+  create ( authorization : global );
+  // update; // No need to update logs.
+  // delete; // No need for consumers to delete logs.
+
+  validation ValidateHasNote on save { field Note; }
+
+}
