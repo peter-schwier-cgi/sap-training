@@ -1,0 +1,10 @@
+projection implementation in class ZBP_C_PCS02_LOG unique;
+strict ( 2 );
+use side effects;
+
+define behavior for ZC_PCS02_LOG //alias <alias_name>
+use etag
+{
+  use create;
+  use update;
+}
