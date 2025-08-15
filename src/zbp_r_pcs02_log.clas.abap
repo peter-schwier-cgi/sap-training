@@ -1,5 +1,15 @@
-CLASS zbp_r_pcs02_log DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_pcs02_log.
+class ZBP_R_PCS02_LOG definition
+  public
+  abstract
+  final
+  for behavior of ZR_PCS02_LOG .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zbp_r_pcs02_log IMPLEMENTATION.
+
+
+CLASS ZBP_R_PCS02_LOG IMPLEMENTATION.
 ENDCLASS.

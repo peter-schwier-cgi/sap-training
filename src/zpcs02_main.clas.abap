@@ -26,6 +26,8 @@ CLASS zpcs02_main IMPLEMENTATION.
 
     TRY.
 
+        out->write( |Starting.| ).
+
         DATA(logging) = NEW zpcs02_logger( writer = out client = '100' re_unique_id = re_unique_id ).
 
         logging->log( |Hello World.| ).

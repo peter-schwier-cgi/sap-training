@@ -1,29 +1,37 @@
 /* https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENCDS_BDEF.html */
 /* Draft table name pattern from: https://learning.sap.com/learning-journeys/acquire-core-abap-skills/exploring-the-architecture-of-rap_cdfbb8b8-9d94-4c33-bc5d-3d29d8206724 */
-managed implementation in class zbp_r_pcs02_log unique;
+managed implementation in class ZBP_R_PCS02_LOG unique;
 strict ( 2 );
-
-define behavior for ZR_PCS02_LOG //alias <alias_name>
+extensible;
+define behavior for ZR_PCS02_LOG alias ZrPcs02Log
 persistent table zpcs02_log
-lock master
-authorization master ( instance )
+extensible
 etag master LocalLastChangedAt
+lock master
+authorization master ( global )
 early numbering
+
 {
-  field ( readonly ) Timestamp, UniqueId;
-  field ( mandatory ) Note;
-  field ( readonly ) CreatedBy, CreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedBy, LastChangedAt;
+  field ( readonly )
+  Timestamp,
+  UniqueId,
+  CreatedBy,
+  CreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedBy,
+  LastChangedAt;
+
+
+  field ( mandatory )
+  Note;
+
 
   create ( authorization : global );
   update;
-  // delete; // No need for consumers to delete logs.
+  delete;
 
-  // determination SetTimestamp on save { create; }
-  // validation ValidateHasNote on save { field Note; }
-
-  // static function GetRecentLogs parameter int4 result [0..*] $self; // https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENBDL_FUNCTION.html
-
-  mapping for zpcs02_log corresponding
+  mapping for zpcs02_log corresponding extensible
     {
       Timestamp          = timestamp;
       UniqueId           = unique_id;
@@ -36,4 +44,5 @@ early numbering
       LastChangedBy      = last_changed_by;
       LastChangedAt      = last_changed_at;
     }
+
 }

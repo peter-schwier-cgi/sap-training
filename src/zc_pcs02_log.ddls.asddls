@@ -1,14 +1,8 @@
+// https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENABAP_RAP.html
 @Metadata.allowExtensions: true
-@AbapCatalog.viewEnhancementCategory: [#NONE]
-@AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Projection View Entity for ZPCS02_LOG'
-@Metadata.ignorePropagatedAnnotations: true
-// @ObjectModel.sapObjectNodeType.name: 'ZPCS02_LOG'
-@ObjectModel.usageType:{
-    serviceQuality: #X,
-    sizeCategory: #S,
-    dataClass: #MIXED
-}
+@EndUserText.label: '###GENERATED Core Data Service Entity'
+@AccessControl.authorizationCheck: #CHECK
+@ObjectModel.sapObjectNodeType.name: 'ZPCS02_LOG'
 define root view entity ZC_PCS02_LOG
   provider contract transactional_query
   as projection on ZR_PCS02_LOG
@@ -23,4 +17,5 @@ define root view entity ZC_PCS02_LOG
       LocalLastChangedAt,
       LastChangedBy,
       LastChangedAt
+
 }

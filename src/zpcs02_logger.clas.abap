@@ -55,6 +55,9 @@ CLASS zpcs02_logger IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD log.
+    IF NOT me->writer IS INITIAL.
+      me->writer->write( |Logging| ).
+    ENDIF.
 
     TEST-SEAM zpcs02_logger_entity_create.
 
@@ -71,7 +74,7 @@ CLASS zpcs02_logger IMPLEMENTATION.
     END-TEST-SEAM.
 
     IF NOT me->writer IS INITIAL.
-      me->writer->write( |{ records-zr_pcs02_log[ 1 ]-Timestamp }: [{ me->re_unique_id }] { note }.| ).
+      me->writer->write( |{ records-zrpcs02log[ 1 ]-Timestamp }: [{ me->re_unique_id }] { note }.| ).
     ENDIF.
 
     this = me.

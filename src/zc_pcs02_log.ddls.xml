@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>ZC_PCS02_LOG</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Projection View Entity for ZPCS02_LOG</DDTEXT>
+    <DDTEXT>Projection View for ZR_PCS02_LOG</DDTEXT>
     <SOURCE_TYPE>P</SOURCE_TYPE>
    </DDLS>
   </asx:values>

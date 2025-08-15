@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_PCS02_LOG'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_PCS02_LOG'
+  }
+}
+define service ZAPI_PCS02_LOG_O4 provider contracts odata_v4_webapi {
+  expose ZC_PCS02_LOG;
+}
