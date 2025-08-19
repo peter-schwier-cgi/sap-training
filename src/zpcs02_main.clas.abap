@@ -12,7 +12,8 @@ ENDCLASS.
 
 
 
-CLASS zpcs02_main IMPLEMENTATION.
+CLASS ZPCS02_MAIN IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 

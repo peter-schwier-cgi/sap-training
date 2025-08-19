@@ -1,0 +1,12 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_PCS02_TODO'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_PCS02_TODO'
+  }
+}
+define service ZAPI_PCS02_TODO_O4
+  provider contracts odata_v4_webapi {
+  expose ZC_PCS02_TODO;
+}

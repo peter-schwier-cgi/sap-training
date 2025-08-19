@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZR_PCS02_TODO'
+@MappingRole: true
+define role ZR_PCS02_TODO {
+  grant select on ZR_PCS02_TODO
+  where TRUE;
+}

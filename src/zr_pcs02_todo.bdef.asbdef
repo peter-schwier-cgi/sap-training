@@ -1,0 +1,46 @@
+managed implementation in class ZBP_R_PCS02_TODO unique;
+strict ( 2 );
+extensible;
+define behavior for ZR_PCS02_TODO alias ZrPcs02Todo
+persistent table ZPCS02_TODO
+extensible
+etag master LocalLastChangedAt
+lock master
+authorization master( global )
+{
+  field ( mandatory : create )
+   UniqueID;
+
+  field ( readonly )
+   CreatedBy,
+   CreatedAt,
+   LocalLastChangedBy,
+   LocalLastChangedAt,
+   LastChangedBy,
+   LastChangedAt;
+
+  field ( readonly : update )
+   UniqueID;
+
+
+  create;
+  update;
+  delete;
+
+  mapping for ZPCS02_TODO corresponding extensible
+  {
+    UniqueID = unique_id;
+    ParentUniqueID = parent_unique_id;
+    Title = title;
+    Note = note;
+    StartDate = start_date;
+    DueDate = due_date;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+
+}

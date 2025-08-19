@@ -7,11 +7,7 @@
     sizeCategory: #L,
     dataClass: #TRANSACTIONAL
 }
-/* Writable means that this view cannot do other than select rows from
- * a single table. No parameters, no calculated fields.
- * https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/ABENCDS_DEFINE_WRTBL_VIEW_V2.html
- */
-define writable root view entity ZR_PCS02_LOG
+define root view entity ZR_PCS02_LOG
   as select from zpcs02_log
 {
   key timestamp as Timestamp,

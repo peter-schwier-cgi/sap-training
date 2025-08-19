@@ -43,6 +43,8 @@ ENDCLASS.
 
 
 CLASS zpcs02_logger IMPLEMENTATION.
+
+
   METHOD constructor.
     me->client = client.
     me->re_unique_id = re_unique_id.
@@ -53,6 +55,19 @@ CLASS zpcs02_logger IMPLEMENTATION.
       me->generator = generator.
     ENDIF.
   ENDMETHOD.
+
+
+  METHOD get_logs.
+    " TODO: Need to update this to use EML.
+    SELECT FROM zr_pcs02_log
+    FIELDS *
+    ORDER BY Timestamp DESCENDING
+    INTO TABLE @FINAL(sql_result)
+    UP TO @count ROWS
+    .
+    result = sql_result.
+  ENDMETHOD.
+
 
   METHOD log.
     IF NOT me->writer IS INITIAL.
@@ -80,19 +95,8 @@ CLASS zpcs02_logger IMPLEMENTATION.
     this = me.
   ENDMETHOD.
 
+
   METHOD regarding.
     this = NEW zpcs02_logger( client = me->client re_unique_id = re_unique_id generator = me->generator ).
   ENDMETHOD.
-
-  METHOD get_logs.
-    " TODO: Need to update this to use EML.
-    SELECT FROM zr_pcs02_log
-    FIELDS *
-    ORDER BY Timestamp DESCENDING
-    INTO TABLE @FINAL(sql_result)
-    UP TO @count ROWS
-    .
-    result = sql_result.
-  ENDMETHOD.
-
 ENDCLASS.
